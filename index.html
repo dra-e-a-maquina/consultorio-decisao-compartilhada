@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<!--
+  ════════════════════════════════════════════════════════════════════════════
+  DECISÃO COMPARTILHADA — SÉRIE CONSULTÓRIO
+  ────────────────────────────────────────────────────────────────────────────
+
+  Autoria: Dra. Luiza Ruiz
+  Conta: @dra.e.a.maquina
+  Criado: 16 de maio de 2026
+  GitHub: https://github.com/dra-e-a-maquina/consultorio-decisao-compartilhada
+  Licença: MIT + Medical Device Disclaimer
+
+  Esta ferramenta é de autoria original e protegida por copyright © 2026.
+  Qualquer uso, modificação ou redistribuição deve manter a atribuição de
+  autoria e estar em conformidade com a Licença MIT.
+
+  ════════════════════════════════════════════════════════════════════════════
+-->
+<html lang="pt-BR"
+      data-author="Dra. Luiza Ruiz"
+      data-account="@dra.e.a.maquina"
+      data-created="2026-05-16"
+      data-source="https://github.com/dra-e-a-maquina/consultorio-decisao-compartilhada"
+      data-version="1.0.0">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decisão Compartilhada — Consultório</title>
+
+    <!-- Author & Copyright Metadata -->
+    <meta name="author" content="Dra. Luiza Ruiz">
+    <meta name="copyright" content="Copyright © 2026 Dra. Luiza Ruiz — @dra.e.a.maquina">
+    <meta name="created" content="2026-05-16">
+    <meta name="source" content="https://github.com/dra-e-a-maquina/consultorio-decisao-compartilhada">
+    <meta name="license" content="MIT + Medical Device Disclaimer">
+
+    <!-- Dublin Core Metadata (Provenance & SEO) -->
+    <meta name="DC.creator" content="Dra. Luiza Ruiz">
+    <meta name="DC.issued" content="2026-05-16">
+    <meta name="DC.rights" content="© 2026 Dra. Luiza Ruiz — Licensed under MIT + Medical Device Disclaimer">
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            /* ═══════════════════════════════════════════════════════════════════
+               DECISÃO COMPARTILHADA — SÉRIE CONSULTÓRIO
+               Autora: Dra. Luiza Ruiz (@dra.e.a.maquina)
+               Criado: 16/05/2026
+               Licença: MIT + Medical Device Disclaimer
+               GitHub: github.com/dra-e-a-maquina/consultorio-decisao-compartilhada
+               ═══════════════════════════════════════════════════════════════════ */
+
+            /* Assinatura de Autoria */
+            --author: "Dra. Luiza Ruiz";
+            --author-account: "@dra.e.a.maquina";
+            --created-date: "2026-05-16";
+            --license: "MIT + Medical Device Disclaimer";
+            --github-repo: "dra-e-a-maquina/consultorio-decisao-compartilhada";
+
+            /* Design System — Paleta Dra. Luiza */
+            --cream: #F5EFE6;
+            --parchment: #EDE4D6;
+            --soil: #2C1F14;
+            --green: #1D6A4A;
+            --terracota: #C4733A;
+            --warm-gray: #8A7A6A;
+            --light-gray: #C4B5A8;
+        }
+
+        html, body {
+            background: var(--cream);
+            color: var(--soil);
+            font-family: 'Cormorant Garamond', serif;
+            line-height: 1.6;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23grain)' opacity='0.03'/%3E%3C/svg%3E");
+            background-size: 400px 400px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        body > * { position: relative; z-index: 2; }
+
+        header {
+            background: var(--cream);
+            border-left: 4px solid var(--green);
+            padding: 24px 28px;
+            box-shadow: 0 2px 8px rgba(44, 31, 20, 0.06);
+            margin-bottom: 24px;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .header-meta {
+            font-family: 'DM Mono', monospace;
+            font-size: 8px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--warm-gray);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px 40px;
+        }
+
+        .clinical-warning {
+            background: rgba(196, 115, 58, 0.1);
+            border-left: 4px solid var(--terracota);
+            padding: 12px 16px;
+            margin-bottom: 24px;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .clinical-warning strong { color: var(--terracota); }
+
+        .scenarios-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .scenario-card {
+            background: var(--parchment);
+            padding: 20px;
+            border-left: 4px solid var(--green);
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+        .scenario-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .scenario-subtitle {
+            font-family: 'DM Mono', monospace;
+            font-size: 8px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--warm-gray);
+            margin-bottom: 16px;
+        }
+
+        .pictogram-wrap {
+            background: var(--cream);
+            border: 1px solid var(--light-gray);
+            padding: 12px;
+            margin-bottom: 12px;
+        }
+
+        .pictogram-wrap svg {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Legenda de cores */
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .legend-dot {
+            width: 10px;
+            height: 10px;
+            flex-shrink: 0;
+        }
+
+        .legend-dot.green { background: var(--green); }
+        .legend-dot.terracota { background: var(--terracota); }
+        .legend-dot.gray { background: var(--light-gray); }
+
+        .legend-text {
+            font-family: 'DM Mono', monospace;
+            font-size: 8px;
+            color: var(--warm-gray);
+        }
+
+        /* Dados */
+        .data-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 14px;
+        }
+
+        .data-cell {
+            background: var(--cream);
+            padding: 8px 10px;
+        }
+
+        .data-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 7.5px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--warm-gray);
+            margin-bottom: 2px;
+        }
+
+        .data-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--soil);
+            line-height: 1;
+        }
+
+        .data-value.green { color: var(--green); }
+        .data-value.terracota { color: var(--terracota); }
+
+        .data-note {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 10px;
+            color: var(--warm-gray);
+            font-style: italic;
+            margin-top: 2px;
+        }
+
+        /* Perguntas */
+        .questions {
+            border-top: 1px solid rgba(44, 31, 20, 0.12);
+            padding-top: 12px;
+        }
+
+        .questions-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 8px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--warm-gray);
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .question-item {
+            font-size: 12px;
+            color: var(--soil);
+            margin-bottom: 5px;
+            line-height: 1.4;
+            padding-left: 10px;
+            position: relative;
+        }
+
+        .question-item::before {
+            content: '—';
+            position: absolute;
+            left: 0;
+            color: var(--green);
+            font-size: 10px;
+        }
+
+        /* Referências por card */
+        .refs {
+            border-top: 1px solid rgba(44, 31, 20, 0.08);
+            padding-top: 10px;
+            margin-top: 12px;
+        }
+
+        .refs-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 7px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--light-gray);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .ref-item {
+            font-family: 'DM Mono', monospace;
+            font-size: 7.5px;
+            color: var(--warm-gray);
+            line-height: 1.5;
+            margin-bottom: 3px;
+        }
+
+        /* Seção de referências completa */
+        .refs-section {
+            background: var(--parchment);
+            border-left: 4px solid var(--light-gray);
+            padding: 20px 24px;
+            margin-bottom: 40px;
+        }
+
+        .refs-section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--soil);
+        }
+
+        .refs-group {
+            margin-bottom: 14px;
+        }
+
+        .refs-group-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 8px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--green);
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .refs-full {
+            font-family: 'DM Mono', monospace;
+            font-size: 8px;
+            color: var(--warm-gray);
+            line-height: 1.7;
+        }
+
+        footer {
+            background: var(--parchment);
+            padding: 16px 24px;
+            text-align: center;
+            margin-top: 40px;
+            font-family: 'DM Mono', monospace;
+            font-size: 8px;
+            color: var(--warm-gray);
+            letter-spacing: 0.1em;
+        }
+
+        .footer-link { color: var(--green); text-decoration: none; }
+
+        @media print {
+            .scenarios-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+            .scenario-card { page-break-inside: avoid; break-inside: avoid; }
+            body { background: white; }
+            body::before { display: none; }
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 22px; }
+            .scenarios-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header data-signature="decisao-compartilhada-v1.0-luiza" data-source="@dra.e.a.maquina">
+        <h1>Decisão Compartilhada</h1>
+        <div class="header-meta">6 cenários clínicos — de 100 pessoas, quantas se beneficiam?</div>
+    </header>
+
+    <div class="container">
+        <div class="clinical-warning">
+            <strong>Aviso:</strong> Dados baseados em estudos populacionais. NNT e NNH variam conforme perfil individual de risco. Use como ponto de partida para conversa, não como prescrição.
+        </div>
+
+        <div class="scenarios-grid">
+
+            <!-- ESTATINAS -->
+            <div class="scenario-card">
+                <div class="scenario-title">Estatinas</div>
+                <div class="scenario-subtitle">Prevenção primária — risco CV intermediário — 10 anos</div>
+                <div class="pictogram-wrap">
+                    <div id="arr-estatinas"></div>
+                </div>
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-dot green"></div>
+                        <span class="legend-text">2 previnem evento CV</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-dot gray"></div>
+                        <span class="legend-text">98 sem efeito aparente</span>
+                    </div>
+                </div>
+                <div class="data-grid">
+                    <div class="data-cell">
+                        <div class="data-label">NNT (10 anos)</div>
+                        <div class="data-value green">~80</div>
+                        <div class="data-note">eventos cardiovasculares</div>
+                    </div>
+                    <div class="data-cell">
+                        <div class="data-label">Risco absoluto</div>
+                        <div class="data-value">5%→3%</div>
+                        <div class="data-note">redução de 2 pp</div>
+                    </div>
+                </div>
+                <div class="questions">
+                    <span class="questions-label">Para a conversa</span>
+                    <div class="question-item">Quanto essa redução de 2% importa para você?</div>
+                    <div class="question-item">Quer tentar estilo de vida antes?</div>
+                    <div class="question-item">Tem histórico familiar de infarto precoce?</div>
+                </div>
+                <div class="refs">
+                    <span class="refs-label">Referências</span>
+                    <div class="ref-item">JUPITER — Ridker et al. NEJM 2008;359:2195</div>
+                    <div class="ref-item">Cochrane — Taylor et al. 2013 · USPSTF 2022</div>
+                </div>
+            </div>
+
+            <!-- PSA -->
+            <div class="scenario-card">
+                <div class="scenario-title">PSA</div>
+                <div class="scenario-subtitle">Rastreamento — homens 55–69 anos — 13 anos</div>
+                <div class="pictogram-wrap">
+                    <div id="arr-psa"></div>
+                </div>
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-dot green"></div>
+                        <span class="legend-text">1 evita morte (de 1000)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-dot terracota"></div>
+                        <span class="legend-text">4 sobrediagnóstico</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-dot gray"></div>
+                        <span class="legend-text">95 sem impacto</span>
+                    </div>
+                </div>
+                <div class="data-grid">
+                    <div class="data-cell">
+                        <div class="data-label">NNT (13 anos)</div>
+                        <div class="data-value green">~1000</div>
+                        <div class="data-note">mortes evitadas</div>
+                    </div>
+                    <div class="data-cell">
+                        <div class="data-label">NNH biópsia</div>
+                        <div class="data-value terracota">~1:5</div>
+                        <div class="data-note">biópsia desnecessária</div>
+                    </div>
+                </div>
+                <div class="questions">
+                    <span class="questions-label">Para a conversa</span>
+                    <div class="question-item">Vale a pena tratar para 1 em 1000 se beneficiar?</div>
+                    <div class="question-item">Como lidaria com tratamento de câncer que não te mataria?</div>
+                    <div class="question-item">Tem histórico familiar de câncer de próstata?</div>
+                </div>
+                <div class="refs">
+                    <span class="refs-label">Referências</span>
+                    <div class="ref-item">ERSPC — Schröder et al. NEJM 2009;360:1320</div>
+                    <div class="ref-item">PLCO — Andriole et al. NEJM 2009;360:1310 · USPSTF 2018</div>
+                </div>
+            </div>
+
+            <!-- HAS -->
+            <div class="scenario-card">
+                <div class="scenario-title">HAS</div>
+                <div class="scenario-subtitle">Início de fármaco — estágio 1 (140–159 mmHg) — 5 anos</div>
+                <div class="pictogram-wrap">
+                    <div id="arr-has"></div>
+                </div>
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-dot green"></div>
+                        <span class="legend-text">4 previnem evento CV</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-dot terracota"></div>
+                        <span class="legend-text">5 com efeitos adversos</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-dot gray"></div>
+                        <span class="legend-text">91 sem impacto direto</span>
+                    </div>
+                </div>
+                <div class="data-grid">
+                    <div class="data-cell">
+                        <div class="data-label">NNT (5 anos)</div>
+                        <div class="data-value green">~50</div>
+                        <div class="data-note">evento CV evitado</div>
+                    </div>
+                    <div class="data-cell">
+                        <div class="data-label">NNH efeitos</div>
+                        <div class="data-value terracota">~20</div>
+                        <div class="data-note">tosse, fadiga, tontura</div>
+                    </div>
+                </div>
+                <div class="questions">
+                    <span class="questions-label">Para a conversa</span>
+                    <div class="question-item">Quer tentar dieta e exercício por 3 meses antes?</div>
+                    <div class="question-item">Quais efeitos colaterais mais te preocupam?</div>
+                    <div class="question-item">Tem outros fatores de risco (tabaco, diabetes)?</div>
+                </div>
+                <div class="refs">
+                    <span class="refs-label">Referências</span>
+                    <div class="ref-item">SPRINT Research Group. NEJM 2015;373:2103</div>
+                </div>
+            </div>
+
+            <!-- PRÉ-DIABETES -->
+            <div class="scenario-card">
+                <div class="scenario-title">Pré-Diabetes</div>
+                <div class="scenario-subtitle">Metformina vs estilo de vida — 3 anos</div>
+                <div class="pictogram-wrap">
+                    <div id="arr-prediabetes"></div>
+                </div>
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-dot green"></div>
+                        <span class="legend-text">15 evitam progressão c/ estilo de vida</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-dot terracota"></div>
+                        <span class="legend-text">15 progridem mesmo assim</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-dot gray"></div>
+                        <span class="legend-text">70 não progrediriam de qualquer forma</span>
+                    </div>
+                </div>
+                <div class="data-grid">
+                    <div class="data-cell">
+                        <div class="data-label">NNT estilo vida</div>
+                        <div class="data-value green">~7</div>
+                        <div class="data-note">evita 1 progressão</div>
+                    </div>
+                    <div class="data-cell">
+                        <div class="data-label">NNT metformina</div>
+                        <div class="data-value green">~14</div>
+                        <div class="data-note">menos eficaz que EV</div>
+                    </div>
+                </div>
+                <div class="questions">
+                    <span class="questions-label">Para a conversa</span>
+                    <div class="question-item">Consegue 150 min/semana de exercício aeróbico?</div>
+                    <div class="question-item">Quer tentar sem medicação primeiro (3 meses)?</div>
+                    <div class="question-item">Tem familiar com diabetes?</div>
+                </div>
+                <div class="refs">
+                    <span class="refs-label">Referências</span>
+                    <div class="ref-item">DPP — Knowler et al. NEJM 2002;346:393</div>
+                    <div class="ref-item">DPP 10 anos — Lancet 2009;374:1677</div>
+                </div>
+            </div>
+
+            <!-- DEPRESSÃO -->
+            <div class="scenario-card">
+                <div class="scenario-title">Depressão</div>
+                <div class="scenario-subtitle">Antidepressivo vs psicoterapia — moderada — 12 semanas</div>
+                <div class="pictogram-wrap">
+                    <div id="arr-depressao"></div>
+                </div>
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-dot green"></div>
+                        <span class="legend-text">14 se beneficiam do AD (vs placebo)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-dot terracota"></div>
+                        <span class="legend-text">10 com efeitos adversos</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-dot gray"></div>
+                        <span class="legend-text">76 sem diferença clara</span>
+                    </div>
+                </div>
+                <div class="data-grid">
+                    <div class="data-cell">
+                        <div class="data-label">NNT antidepressivo</div>
+                        <div class="data-value green">~7</div>
+                        <div class="data-note">remissão vs placebo</div>
+                    </div>
+                    <div class="data-cell">
+                        <div class="data-label">NNH efeitos sexuais</div>
+                        <div class="data-value terracota">~6</div>
+                        <div class="data-note">disfunção sexual</div>
+                    </div>
+                </div>
+                <div class="questions">
+                    <span class="questions-label">Para a conversa</span>
+                    <div class="question-item">Teve terapia antes? Como foi?</div>
+                    <div class="question-item">Efeitos colaterais sexuais te preocupam?</div>
+                    <div class="question-item">Prefere combinação (AD + terapia)?</div>
+                </div>
+                <div class="refs">
+                    <span class="refs-label">Referências</span>
+                    <div class="ref-item">Cipriani et al. Lancet 2018;391:1357</div>
+                    <div class="ref-item">Fournier et al. JAMA 2010;303:47</div>
+                </div>
+            </div>
+
+            <!-- OSTEOPOROSE -->
+            <div class="scenario-card">
+                <div class="scenario-title">Osteoporose</div>
+                <div class="scenario-subtitle">Bifosfonato — T-score ≤ −2.5 — 3 anos</div>
+                <div class="pictogram-wrap">
+                    <div id="arr-osteoporose"></div>
+                </div>
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-dot green"></div>
+                        <span class="legend-text">5 evitam fratura de quadril</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-dot terracota"></div>
+                        <span class="legend-text">10 fraturarão mesmo</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-dot gray"></div>
+                        <span class="legend-text">85 sem fratura de qualquer forma</span>
+                    </div>
+                </div>
+                <div class="data-grid">
+                    <div class="data-cell">
+                        <div class="data-label">NNT (3 anos)</div>
+                        <div class="data-value green">~50</div>
+                        <div class="data-note">fraturas evitadas</div>
+                    </div>
+                    <div class="data-cell">
+                        <div class="data-label">NNH (raro)</div>
+                        <div class="data-value terracota">~1:10k</div>
+                        <div class="data-note">osteonecrose de mandíbula</div>
+                    </div>
+                </div>
+                <div class="questions">
+                    <span class="questions-label">Para a conversa</span>
+                    <div class="question-item">Faz exercício de carga (caminhada, musculação)?</div>
+                    <div class="question-item">Consegue tomar 1 comprimido por semana, em jejum?</div>
+                    <div class="question-item">Tem histórico de quedas frequentes?</div>
+                </div>
+                <div class="refs">
+                    <span class="refs-label">Referências</span>
+                    <div class="ref-item">FIT — Black et al. Lancet 1996;348:1535</div>
+                    <div class="ref-item">Cummings et al. NEJM 1998;338:736</div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- REFERÊNCIAS COMPLETAS -->
+        <div class="refs-section">
+            <div class="refs-section-title">Referências</div>
+
+            <div class="refs-group">
+                <span class="refs-group-label">Estatinas — Prevenção Primária</span>
+                <div class="refs-full">
+                    Ridker PM et al. Rosuvastatin to prevent vascular events in men and women with elevated C-reactive protein (JUPITER). <em>N Engl J Med.</em> 2008;359:2195-2207.<br>
+                    Taylor F et al. Statins for the primary prevention of cardiovascular disease. <em>Cochrane Database Syst Rev.</em> 2013.<br>
+                    USPSTF. Statin use for the primary prevention of CVD events in adults. <em>JAMA.</em> 2022.
+                </div>
+            </div>
+
+            <div class="refs-group">
+                <span class="refs-group-label">PSA — Rastreamento</span>
+                <div class="refs-full">
+                    Schröder FH et al. Screening and prostate-cancer mortality in a randomized European study (ERSPC). <em>N Engl J Med.</em> 2009;360:1320-1328.<br>
+                    Andriole GL et al. Mortality results from a randomized prostate-cancer screening trial (PLCO). <em>N Engl J Med.</em> 2009;360:1310-1319.<br>
+                    USPSTF. Screening for prostate cancer. <em>JAMA.</em> 2018;319(18):1901-1913.
+                </div>
+            </div>
+
+            <div class="refs-group">
+                <span class="refs-group-label">HAS — Início de Tratamento Farmacológico</span>
+                <div class="refs-full">
+                    SPRINT Research Group. A randomized trial of intensive versus standard blood-pressure control. <em>N Engl J Med.</em> 2015;373:2103-2116.
+                </div>
+            </div>
+
+            <div class="refs-group">
+                <span class="refs-group-label">Pré-Diabetes — Metformina vs Estilo de Vida</span>
+                <div class="refs-full">
+                    Knowler WC et al. Reduction in the incidence of type 2 diabetes with lifestyle intervention or metformin (DPP). <em>N Engl J Med.</em> 2002;346:393-403.<br>
+                    Diabetes Prevention Program Research Group. 10-year follow-up of diabetes incidence and weight loss. <em>Lancet.</em> 2009;374:1677-1686.
+                </div>
+            </div>
+
+            <div class="refs-group">
+                <span class="refs-group-label">Depressão — Antidepressivo vs Psicoterapia</span>
+                <div class="refs-full">
+                    Cipriani A et al. Comparative efficacy and acceptability of 21 antidepressant drugs for the acute treatment of adults with major depressive disorder. <em>Lancet.</em> 2018;391:1357-1366.<br>
+                    Fournier JC et al. Antidepressant drug effects and depression severity. <em>JAMA.</em> 2010;303(1):47-53.
+                </div>
+            </div>
+
+            <div class="refs-group">
+                <span class="refs-group-label">Osteoporose — Bifosfonatos</span>
+                <div class="refs-full">
+                    Black DM et al. Randomised trial of effect of alendronate on risk of fracture in women with existing vertebral fractures (FIT). <em>Lancet.</em> 1996;348:1535-1541.<br>
+                    Cummings SR et al. Effect of alendronate on risk of fracture in women with low bone density but without vertebral fractures. <em>N Engl J Med.</em> 1998;338:736-746.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer data-source="@dra.e.a.maquina" data-license="MIT + Medical Disclaimer">
+        <p>
+            © 2026 <strong>Dra. Luiza Ruiz</strong> —
+            <a href="https://instagram.com/dra.e.a.maquina" target="_blank" class="footer-link" data-author-link="true">@dra.e.a.maquina</a>
+            <br>
+            <small>
+                Licença MIT + Medical Device Disclaimer —
+                <a href="https://github.com/dra-e-a-maquina/consultorio-decisao-compartilhada" target="_blank" class="footer-link">Código-fonte</a>
+                <br>
+                offline-first · sem coleta de dados · ferramenta de apoio, não substitui julgamento clínico
+            </small>
+        </p>
+    </footer>
+
+    <script>
+        // Icon array: figura humana simplificada
+        function drawPerson(svg, cx, cy, color) {
+            const ns = "http://www.w3.org/2000/svg";
+            const g = document.createElementNS(ns, "g");
+
+            // Cabeça
+            const head = document.createElementNS(ns, "circle");
+            head.setAttribute("cx", cx);
+            head.setAttribute("cy", cy + 2.5);
+            head.setAttribute("r", "2.5");
+            head.setAttribute("fill", color);
+            g.appendChild(head);
+
+            // Tronco
+            const body = document.createElementNS(ns, "line");
+            body.setAttribute("x1", cx); body.setAttribute("y1", cy + 5);
+            body.setAttribute("x2", cx); body.setAttribute("y2", cy + 12);
+            body.setAttribute("stroke", color);
+            body.setAttribute("stroke-width", "2");
+            g.appendChild(body);
+
+            // Braços
+            const arms = document.createElementNS(ns, "line");
+            arms.setAttribute("x1", cx - 3.5); arms.setAttribute("y1", cy + 8);
+            arms.setAttribute("x2", cx + 3.5); arms.setAttribute("y2", cy + 8);
+            arms.setAttribute("stroke", color);
+            arms.setAttribute("stroke-width", "1.5");
+            g.appendChild(arms);
+
+            // Perna esquerda
+            const lLeg = document.createElementNS(ns, "line");
+            lLeg.setAttribute("x1", cx); lLeg.setAttribute("y1", cy + 12);
+            lLeg.setAttribute("x2", cx - 2.5); lLeg.setAttribute("y2", cy + 18);
+            lLeg.setAttribute("stroke", color);
+            lLeg.setAttribute("stroke-width", "1.5");
+            g.appendChild(lLeg);
+
+            // Perna direita
+            const rLeg = document.createElementNS(ns, "line");
+            rLeg.setAttribute("x1", cx); rLeg.setAttribute("y1", cy + 12);
+            rLeg.setAttribute("x2", cx + 2.5); rLeg.setAttribute("y2", cy + 18);
+            rLeg.setAttribute("stroke", color);
+            rLeg.setAttribute("stroke-width", "1.5");
+            g.appendChild(rLeg);
+
+            svg.appendChild(g);
+        }
+
+        function createIconArray(containerId, greenCount, terracotaCount, grayCount) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            const ns = "http://www.w3.org/2000/svg";
+            const svg = document.createElementNS(ns, "svg");
+            svg.setAttribute("viewBox", "0 0 200 200");
+            svg.setAttribute("style", "width: 100%; height: auto;");
+
+            const colors = [
+                ...Array(greenCount).fill("#1D6A4A"),
+                ...Array(terracotaCount).fill("#C4733A"),
+                ...Array(grayCount).fill("#C4B5A8")
+            ];
+
+            for (let i = 0; i < 100; i++) {
+                const col = i % 10;
+                const row = Math.floor(i / 10);
+                const cx = col * 20 + 10;
+                const cy = row * 20 + 1;
+                drawPerson(svg, cx, cy, colors[i] || "#C4B5A8");
+            }
+
+            container.appendChild(svg);
+        }
+
+        // Renderizar todos os cenários
+        createIconArray("arr-estatinas",     2,  0, 98);
+        createIconArray("arr-psa",           1,  4, 95);
+        createIconArray("arr-has",           4,  5, 91);
+        createIconArray("arr-prediabetes",  15, 15, 70);
+        createIconArray("arr-depressao",    14, 10, 76);
+        createIconArray("arr-osteoporose",   5, 10, 85);
+
+        // Ctrl/Cmd+P para imprimir
+        document.addEventListener("keydown", (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === "p") {
+                e.preventDefault();
+                window.print();
+            }
+        });
+
+        // ═══════════════════════════════════════════════════════════════════════
+        // CONSOLE WATERMARK — PROTEÇÃO DE AUTORIA
+        // ═══════════════════════════════════════════════════════════════════════
+        console.clear();
+        console.log(
+            '%c╔════════════════════════════════════════════════════════════════╗',
+            'color: #1D6A4A; font-family: DM Mono; font-weight: bold;'
+        );
+        console.log(
+            '%c║  DECISÃO COMPARTILHADA — Série Consultório                  ║',
+            'color: #1D6A4A; font-family: DM Mono; font-weight: bold;'
+        );
+        console.log(
+            '%c║  Autora: Dra. Luiza Ruiz (@dra.e.a.maquina)                ║',
+            'color: #2C1F14; font-family: DM Mono;'
+        );
+        console.log(
+            '%c║  Criado: 16/05/2026 | Licença: MIT + Medical Disclaimer    ║',
+            'color: #2C1F14; font-family: DM Mono;'
+        );
+        console.log(
+            '%c║  GitHub: github.com/dra-e-a-maquina/consultorio-decisao    ║',
+            'color: #1D6A4A; font-family: DM Mono; font-weight: bold;'
+        );
+        console.log(
+            '%c╚════════════════════════════════════════════════════════════════╝',
+            'color: #1D6A4A; font-family: DM Mono; font-weight: bold;'
+        );
+        console.log('');
+        console.log(
+            '%cEsta ferramenta é de autoria original protegida por MIT License.',
+            'color: #C4733A; font-family: Cormorant Garamond; font-style: italic;'
+        );
+        console.log(
+            '%cUso, cópia ou modificação sem atribuição viola direitos autorais.',
+            'color: #C4733A; font-family: Cormorant Garamond; font-style: italic;'
+        );
+        console.log('');
+    </script>
+</body>
+</html>
